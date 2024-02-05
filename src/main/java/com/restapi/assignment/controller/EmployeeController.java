@@ -3,6 +3,7 @@ package com.restapi.assignment.controller;
 import com.restapi.assignment.entity.Employee;
 import com.restapi.assignment.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +41,9 @@ public class EmployeeController {
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/employee/{theId}")
-    public void deleteEmployee(@PathVariable("theId") int theId){
+    public ResponseEntity<String> deleteEmployee(@PathVariable("theId") int theId){
         theEmployeeService.deleteEmployeeById(theId);
+        return new ResponseEntity<>("this user has been successfully deleted",HttpStatus.OK);
     }
 
     @GetMapping("/currentUser")
